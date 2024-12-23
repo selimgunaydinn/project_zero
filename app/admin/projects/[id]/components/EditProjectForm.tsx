@@ -66,7 +66,7 @@ export default function EditProjectForm({ project }: { project: any }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 mt-4">
       <div>
-        <label className="block font-semibold mb-1">Başlık</label>
+        <label className="block font-semibold mb-1">Title</label>
         <input
           type="text"
           className="border border-gray-300 p-2 rounded w-full"
@@ -77,7 +77,7 @@ export default function EditProjectForm({ project }: { project: any }) {
       </div>
 
       <div>
-        <label className="block font-semibold mb-1">Açıklama</label>
+        <label className="block font-semibold mb-1">Description</label>
         <textarea
           className="border border-gray-300 p-2 rounded w-full"
           value={description}
@@ -92,7 +92,7 @@ export default function EditProjectForm({ project }: { project: any }) {
       )}
 
       <div>
-        <label className="block font-semibold mb-1">Fotoğraf Değiştir</label>
+        <label className="block font-semibold mb-1">Change Image</label>
         <input type="file" accept="image/*" onChange={handleFileChange} />
       </div>
 
@@ -100,7 +100,7 @@ export default function EditProjectForm({ project }: { project: any }) {
         type="submit"
         className="bg-blue-600 text-white px-4 py-2 rounded"
       >
-        Kaydet
+        Save
       </button>
     </form>
   );

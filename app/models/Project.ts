@@ -11,8 +11,8 @@ const ProjectSchema = new Schema({
     default: Date.now,
   },
   photoUrl: {
-    type: String, // Fotoğraf dosyasının URL'sini saklayacağız
-    default: '',  // Başlangıçta boş olabilir
+    type: String, 
+    default: '',  
   }
 });
 

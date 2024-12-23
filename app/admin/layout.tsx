@@ -23,7 +23,7 @@ export default async function AdminLayout({
     <div className="flex min-h-screen">
       <aside className="w-64 sticky left-0 top-0 h-screen bg-gray-800 text-white flex flex-col">
         <div className="py-4 px-6">
-          <h2 className="text-xl font-bold">Admin Panel</h2>
+          <h2 className="text-xl font-bold">Project Zero</h2>
         </div>
         <nav className="flex-1 px-4">
           <ul className="space-y-2 mt-4">
@@ -41,6 +41,14 @@ export default async function AdminLayout({
                 className="block py-2 px-2 rounded hover:bg-gray-700 transition-colors"
               >
                 Projeler
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/admin/settings"
+                className="block py-2 px-2 rounded hover:bg-gray-700 transition-colors"
+              >
+                Ayarlar
               </Link>
             </li>
           </ul>
