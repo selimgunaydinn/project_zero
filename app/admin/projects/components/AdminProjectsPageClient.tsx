@@ -34,7 +34,13 @@ export default function AdminProjectsPageClient({
   return (
     <div>
       <h1 className="text-3xl font-bold mb-6">Projeler</h1>
-
+      <h2 className="text-2xl font-semibold mb-4">Yeni Proje Ekle</h2>
+      <NewProjectForm
+        onProjectAdded={(newProject: any) => {
+          setProjects((prev) => [...prev, newProject]);
+        }}
+      />
+      <hr className="my-8" />
       {/* Projeler Listesi */}
       {projects.length === 0 ? (
         <p className="text-gray-600 mb-6">Henüz proje eklenmemiş.</p>
@@ -84,14 +90,6 @@ export default function AdminProjectsPageClient({
         </ul>
       )}
 
-      <hr className="my-6" />
-
-      <h2 className="text-2xl font-semibold mb-4">Yeni Proje Ekle</h2>
-      <NewProjectForm
-        onProjectAdded={(newProject: any) => {
-          setProjects((prev) => [...prev, newProject]);
-        }}
-      />
     </div>
   );
 }

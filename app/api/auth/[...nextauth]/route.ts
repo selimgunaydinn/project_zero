@@ -1,6 +1,9 @@
 import { NextAuthOptions } from 'next-auth';
 import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import bcrypt from 'bcrypt';
+import { connectDB } from '@/app/lib/mongodb';
+import { User } from '@/app/models/User';
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -11,18 +14,33 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        username: { label: 'Kullanıcı Adı', type: 'text' },
+        email: { label: 'E-posta', type: 'text' },
         password: { label: 'Şifre', type: 'password' },
       },
       async authorize(credentials) {
-        const { username, password } = credentials ?? {};
-        const envUsername = process.env.ADMIN_USERNAME;
-        const envPassword = process.env.ADMIN_PASSWORD;
+        await connectDB();
 
-        if (username === envUsername && password === envPassword) {
-          return { id: 'admin-1', name: 'Admin User' };
+        const { email, password } = credentials ?? {};
+
+        if (!email || !password) {
+          throw new Error('Tüm alanları doldurun.');
         }
-        return null;
+
+        // Kullanıcıyı bul
+        const user = await User.findOne({ email }).lean();
+
+        if (!user) {
+          throw new Error('E-posta veya şifre hatalı.');
+        }
+
+        // Şifre doğrulama
+        const isValidPassword = await bcrypt.compare(password, user.password);
+
+        if (!isValidPassword) {
+          throw new Error('E-posta veya şifre hatalı.');
+        }
+
+        return { id: user._id, email: user.email }; // Kullanıcı verisini döndür.
       },
     }),
   ],
