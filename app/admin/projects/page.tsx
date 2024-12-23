@@ -1,6 +1,6 @@
 // app/admin/page.tsx (veya benzer server component)
-import { connectDB } from '@/lib/mongodb';
-import { Project } from '@/models/Project';
+import { connectDB } from '@/app/lib/mongodb';
+import { Project } from '@/app/models/Project';
 import AdminProjectsPageClient from './components/AdminProjectsPageClient';
 
 export default async function AdminProjectsPage() {

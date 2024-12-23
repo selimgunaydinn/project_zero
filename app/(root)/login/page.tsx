@@ -1,27 +1,40 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { FormEvent, useState, useEffect } from 'react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
+  const { data: session, status } = useSession(); // Oturum durumunu kontrol et
+
+  useEffect(() => {
+    // Eğer kullanıcı giriş yapmışsa, admin sayfasına yönlendir
+    if (session) {
+      router.push('/admin');
+    }
+  }, [session, router]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const result = await signIn('credentials', {
       username,
       password,
-      redirect: false, 
+      redirect: false,
     });
     if (result?.ok) {
-      router.push('/admin'); 
+      router.push('/admin'); // Başarılı giriş sonrası admin sayfasına yönlendirme
     } else {
       alert('Kullanıcı adı veya şifre hatalı!');
     }
   };
+
+  // Kullanıcı giriş yapmışsa, bu sayfa render edilmesin (optional double check)
+  if (status === 'authenticated') {
+    return null; // Boş render döndür
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">

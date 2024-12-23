@@ -1,5 +1,5 @@
-import { connectDB } from '@/lib/mongodb';
-import { Project } from '@/models/Project';
+import { connectDB } from '@/app/lib/mongodb';
+import { Project } from '@/app/models/Project';
 import EditProjectForm from './components/EditProjectForm';
 
 interface EditPageProps {
