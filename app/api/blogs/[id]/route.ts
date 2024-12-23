@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/app/lib/mongodb';
-import { Project } from '@/app/models/Project';
+import { Blog } from '@/app/models/Blog';
 
 export async function GET(
   request: NextRequest,
@@ -8,11 +8,12 @@ export async function GET(
 ) {
   try {
     await connectDB();
-    const project = await Project.findById(params.id);
-    if (!project) {
+    const blog = await Blog.findById(params.id);
+    const blogWithCategory = await Blog.findById(params.id).populate('category');
+    if (!blog) {
       return NextResponse.json({ success: false, error: 'Project not found' }, { status: 404 });
     }
-    return NextResponse.json({ success: true, data: project });
+    return NextResponse.json({ success: true, data: blogWithCategory });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
@@ -24,16 +25,16 @@ export async function PUT(
 ) {
   try {
     await connectDB();
-    const { title, description, photoUrl } = await request.json();
-    const updatedProject = await Project.findByIdAndUpdate(
+    const { title, content } = await request.json();
+    const updatedBlog = await Blog.findByIdAndUpdate(
       params.id,
-      { title, description, photoUrl },
+      { title, content },
       { new: true }
     );
-    if (!updatedProject) {
+    if (!updatedBlog) {
       return NextResponse.json({ success: false, error: 'Project not found' }, { status: 404 });
     }
-    return NextResponse.json({ success: true, data: updatedProject });
+    return NextResponse.json({ success: true, data: updatedBlog });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
@@ -45,11 +46,11 @@ export async function DELETE(
 ) {
   try {
     await connectDB();
-    const deletedProject = await Project.findByIdAndDelete(params.id);
-    if (!deletedProject) {
+    const deletedBlog = await Blog.findByIdAndDelete(params.id);
+    if (!deletedBlog) {
       return NextResponse.json({ success: false, error: 'Project not found' }, { status: 404 });
     }
-    return NextResponse.json({ success: true, data: deletedProject });
+    return NextResponse.json({ success: true, data: deletedBlog });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }

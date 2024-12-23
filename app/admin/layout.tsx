@@ -37,10 +37,10 @@ export default async function AdminLayout({
             </li>
             <li>
               <Link
-                href="/admin/projects"
+                href="/admin/blogs"
                 className="block py-2 px-2 rounded hover:bg-gray-700 transition-colors"
               >
-                Projeler
+                Bloglar
               </Link>
             </li>
             <li>

@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/app/lib/mongodb';
-import { Project } from '@/app/models/Project';
+import { Blog, Category } from '@/app/models/Blog';
 
 export async function GET() {
   try {
     await connectDB();
-    const projects = await Project.find();
-    return NextResponse.json({ success: true, data: projects });
+    const blogs = await Blog.find().populate('category')
+    return NextResponse.json({ success: true, data: blogs });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
@@ -15,9 +15,9 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     await connectDB();
-    const { title, description, photoUrl } = await req.json();
-    const newProject = await Project.create({ title, description, photoUrl });
-    return NextResponse.json({ success: true, data: newProject });
+    const { title, content, category } = await req.json();
+    const newBlog = await Blog.create({ title, content, category });
+    return NextResponse.json({ success: true, data: newBlog });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }

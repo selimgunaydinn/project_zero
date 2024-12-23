@@ -1,10 +1,10 @@
-import mongoose, { Schema, model, models } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 
 const GlobalSettingsSchema = new Schema({
   websiteName: {
     type: String,
     required: false,
-    default: '', // Varsayılan olarak boş string
+    default: '',
   },
   websiteDescription: {
     type: String,
