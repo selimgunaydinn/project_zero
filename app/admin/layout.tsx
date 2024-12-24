@@ -1,8 +1,5 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import LogoutButton from "./components/LogoutButton";
 
 export const metadata: Metadata = {
@@ -14,10 +11,6 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    redirect("/login");
-  }
 
   return (
     <div className="flex min-h-screen">
@@ -33,22 +26,6 @@ export default async function AdminLayout({
                 className="block py-2 px-2 rounded hover:bg-gray-700 transition-colors"
               >
                 Dashboard
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/admin/blogs"
-                className="block py-2 px-2 rounded hover:bg-gray-700 transition-colors"
-              >
-                Bloglar
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/admin/settings"
-                className="block py-2 px-2 rounded hover:bg-gray-700 transition-colors"
-              >
-                Ayarlar
               </Link>
             </li>
           </ul>
